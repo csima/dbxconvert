@@ -1,5 +1,7 @@
 # dbx-converter - DBX to MBOX converter
 
+This was converted to Go from the original C++ code located here: http://www.ukrebs-software.de/english/dbxconv/dbxconv.html
+
 ## Version 1.0.0 (12/09/2016)
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -52,6 +54,9 @@ This option tells dbx-converter to use the "Date" field of the messages as times
 **-rcvdate**  
 With this option, dbx-converter uses the "Received" date of the messages as timestamp.
 
+**-merge**        
+Merge multiple input DBX files into single output MBX(MBXRD)
+  
 **-?**  
 Shows a quick reference.
 
