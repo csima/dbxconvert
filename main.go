@@ -37,10 +37,7 @@ func FormatFilename(dbx *DBXReader, msgNr int, format string) (outString string)
 	var tokens []string
 	for _, submatch := range submatches {
 		varName = submatch[1]
-		tokens = []string{}
-		for _, part := range strings.Split(varName, "_") {
-			tokens = append(tokens, part)
-		}
+		tokens = strings.Split(varName, "_")
 
 		var s string
 		//		var parsePos int
