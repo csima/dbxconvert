@@ -34,7 +34,7 @@ func FormatFilename(dbx *DBXReader, msgNr int, format string) (outString string)
 	outString = format
 	rx := regexp.MustCompile(`\$(.*?)\$`)
 	submatches := rx.FindAllStringSubmatch(format, -1)
-	tokens := []string{}
+	var tokens []string
 	for _, submatch := range submatches {
 		varName = submatch[1]
 		tokens = []string{}
@@ -564,13 +564,13 @@ func main() {
 				}
 
 				s := dbx.GetMessage(j)
-				outFileEml.WriteString(s)
+				_, _ = outFileEml.WriteString(s)
 				outFileEml.Close()
 
 				if argRcvDate {
-					os.Chtimes(outFilePath, dbx.GetReceiveDate(j), dbx.GetReceiveDate(j))
+					_ = os.Chtimes(outFilePath, dbx.GetReceiveDate(j), dbx.GetReceiveDate(j))
 				} else {
-					os.Chtimes(outFilePath, dbx.GetSendDate(j), dbx.GetSendDate(j))
+					_ = os.Chtimes(outFilePath, dbx.GetSendDate(j), dbx.GetSendDate(j))
 				}
 				processedMails++
 			}

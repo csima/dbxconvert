@@ -372,7 +372,6 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 	for i = 0; i < count; i++ {
 		t = 0
 		_ = binary.Read(self.f, binary.LittleEndian, &t)
-		value = 0
 		b := []byte{}
 		var bt byte
 		for n := 0; n < 3; n++ {
@@ -433,7 +432,7 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 		_, _ = self.f.Seek(2, 1)
 		_ = binary.Read(self.f, binary.LittleEndian, &i2)
 		bbuf = make([]byte, blockSize)
-		self.f.Read(bbuf)
+		_, _ = self.f.Read(bbuf)
 		pl = append(pl, bbuf...)
 		pos += uint32(blockSize)
 		it++
