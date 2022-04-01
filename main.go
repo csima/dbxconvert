@@ -214,10 +214,10 @@ var (
 	argRcvDate   bool   = false
 	argOverwrite bool   = false
 	argHelp      bool   = false
-	argSendDate  bool   = false
-	argMerge     bool   = false
-	fileSpec     string = ""
-	outDir       string = ""
+	//argSendDate  bool   = false
+	argMerge bool   = false
+	fileSpec string = ""
+	outDir   string = ""
 
 	mbxFilenameFormat string = "$DBXNAME$.mbx"
 	emlFilenameFormat string = "$SNAME_L:32_E:Unknown$ - $SUBJ_L:64_E:No Subject$.eml"
@@ -283,7 +283,7 @@ func parseArguments() {
 			}
 
 			if strings.ToLower(s) == "-senddate" {
-				argSendDate = true
+				//argSendDate = true
 				continue
 			}
 
