@@ -38,7 +38,7 @@ func (self *DBXReader) init() error {
 
 	signature := [4]uint32{}
 	for i := 0; i < 4; i++ {
-		binary.Read(self.f, binary.LittleEndian, &signature[i])
+		_ = binary.Read(self.f, binary.LittleEndian, &signature[i])
 	}
 
 	if signature[0] == 0xFE12ADCF && signature[1] == 0x6F74FDC5 && signature[2] == 0x11D1E366 && signature[3] == 0xC0004E9A {
@@ -70,11 +70,11 @@ func (self *DBXReader) readIndexes() {
 	var indexPtr uint32
 	var itemCount uint32
 
-	self.f.Seek(INDEX_POINTER, 0)
-	binary.Read(self.f, binary.LittleEndian, &indexPtr)
+	_, _ = self.f.Seek(INDEX_POINTER, 0)
+	_ = binary.Read(self.f, binary.LittleEndian, &indexPtr)
 
-	self.f.Seek(ITEM_COUNT, 0)
-	binary.Read(self.f, binary.LittleEndian, &itemCount)
+	_, _ = self.f.Seek(ITEM_COUNT, 0)
+	_ = binary.Read(self.f, binary.LittleEndian, &itemCount)
 
 	if itemCount > 0 {
 		self.readIndex(int(indexPtr))
@@ -90,12 +90,12 @@ func (self *DBXReader) readIndex(pos int) {
 	var ptrCount uint8
 	var indexCount uint32
 
-	self.f.Seek(int64(pos)+8, 0)
-	binary.Read(self.f, binary.LittleEndian, &nextTable)
-	self.f.Seek(5, 1)
-	binary.Read(self.f, binary.LittleEndian, &ptrCount)
-	self.f.Seek(2, 1)
-	binary.Read(self.f, binary.LittleEndian, &indexCount)
+	_, _ = self.f.Seek(int64(pos)+8, 0)
+	_ = binary.Read(self.f, binary.LittleEndian, &nextTable)
+	_, _ = self.f.Seek(5, 1)
+	_ = binary.Read(self.f, binary.LittleEndian, &ptrCount)
+	_, _ = self.f.Seek(2, 1)
+	_ = binary.Read(self.f, binary.LittleEndian, &indexCount)
 
 	if indexCount > 0 {
 		self.readIndex(int(nextTable))
@@ -105,11 +105,11 @@ func (self *DBXReader) readIndex(pos int) {
 
 	var i int64
 	for i = 0; i < int64(ptrCount); i++ {
-		self.f.Seek(int64(pos), 0)
+		_, _ = self.f.Seek(int64(pos), 0)
 		var indexPtr uint32
-		binary.Read(self.f, binary.LittleEndian, &indexPtr)
-		binary.Read(self.f, binary.LittleEndian, &nextTable)
-		binary.Read(self.f, binary.LittleEndian, &indexCount)
+		_ = binary.Read(self.f, binary.LittleEndian, &indexPtr)
+		_ = binary.Read(self.f, binary.LittleEndian, &nextTable)
+		_ = binary.Read(self.f, binary.LittleEndian, &indexCount)
 
 		self.indexes = append(self.indexes, indexPtr)
 		pos += 12
@@ -124,13 +124,13 @@ func (self *DBXReader) readInfos() {
 	for i := 0; i < self.GetItemCount(); i++ {
 		var index uint32
 		index = uint32(self.GetIndex(i))
-		self.f.Seek(int64(index)+4, 0)
+		_, _ = self.f.Seek(int64(index)+4, 0)
 		var size uint32
-		binary.Read(self.f, binary.LittleEndian, &size)
-		self.f.Seek(2, 1)
+		_ = binary.Read(self.f, binary.LittleEndian, &size)
+		_, _ = self.f.Seek(2, 1)
 		var count uint8
-		binary.Read(self.f, binary.LittleEndian, &count)
-		self.f.Seek(1, 1)
+		_ = binary.Read(self.f, binary.LittleEndian, &count)
+		_, _ = self.f.Seek(1, 1)
 
 		var offset uint32
 		offset = 0
@@ -148,15 +148,15 @@ func (self *DBXReader) readInfos() {
 
 		var j uint8
 		for j = 0; j < count; j++ {
-			self.f.Seek(int64(pos), 0)
+			_, _ = self.f.Seek(int64(pos), 0)
 			var tp uint8
-			binary.Read(self.f, binary.LittleEndian, &tp)
+			_ = binary.Read(self.f, binary.LittleEndian, &tp)
 			var value uint32
 
 			b := []byte{}
 			var bt byte
 			for n := 0; n < 3; n++ {
-				binary.Read(self.f, binary.LittleEndian, &bt)
+				_ = binary.Read(self.f, binary.LittleEndian, &bt)
 				b = append(b, bt)
 			}
 			b = append(b, 0)
@@ -218,13 +218,13 @@ func (self *DBXReader) readString(offset int) (s string) {
 	if int64(offset) >= self.fSize {
 		panic("Bad seek")
 	}
-	self.f.Seek(int64(offset), 0)
+	_, _ = self.f.Seek(int64(offset), 0)
 	var c []byte
 	var ch byte
 
 	c = []byte{}
 	for {
-		binary.Read(self.f, binary.LittleEndian, &ch)
+		_ = binary.Read(self.f, binary.LittleEndian, &ch)
 		if ch != 0x00 {
 			c = append(c, ch)
 			continue
@@ -245,9 +245,9 @@ func (self *DBXReader) readDate(offset int) time.Time {
 	if int64(offset) >= self.fSize {
 		panic("Bad seek")
 	}
-	self.f.Seek(int64(offset), 0)
+	_, _ = self.f.Seek(int64(offset), 0)
 	var fileTime int64
-	binary.Read(self.f, binary.LittleEndian, &fileTime)
+	_ = binary.Read(self.f, binary.LittleEndian, &fileTime)
 	if fileTime < 0 {
 		return time.Time{}
 	}
@@ -357,11 +357,11 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 	var size uint32
 	var count uint8
 
-	self.f.Seek(int64(index)+4, 0)
-	binary.Read(self.f, binary.LittleEndian, &size)
-	self.f.Seek(2, 1)
-	binary.Read(self.f, binary.LittleEndian, &count)
-	self.f.Seek(1, 1)
+	_, _ = self.f.Seek(int64(index)+4, 0)
+	_ = binary.Read(self.f, binary.LittleEndian, &size)
+	_, _ = self.f.Seek(2, 1)
+	_ = binary.Read(self.f, binary.LittleEndian, &count)
+	_, _ = self.f.Seek(1, 1)
 
 	var msgOffset uint32
 	var msgOffsetPtr uint32
@@ -371,12 +371,12 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 
 	for i = 0; i < count; i++ {
 		t = 0
-		binary.Read(self.f, binary.LittleEndian, &t)
+		_ = binary.Read(self.f, binary.LittleEndian, &t)
 		value = 0
 		b := []byte{}
 		var bt byte
 		for n := 0; n < 3; n++ {
-			binary.Read(self.f, binary.LittleEndian, &bt)
+			_ = binary.Read(self.f, binary.LittleEndian, &bt)
 			b = append(b, bt)
 		}
 		b = append(b, 0)
@@ -394,8 +394,8 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 	var blockSize uint16
 
 	if msgOffset == 0 && msgOffsetPtr != 0 {
-		self.f.Seek(int64(msgOffsetPtr), 0)
-		binary.Read(self.f, binary.LittleEndian, &msgOffset)
+		_, _ = self.f.Seek(int64(msgOffsetPtr), 0)
+		_ = binary.Read(self.f, binary.LittleEndian, &msgOffset)
 	}
 
 	i2 := msgOffset
@@ -408,11 +408,11 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 			panic("Bad seek")
 		}
 		oldIndex = i2
-		self.f.Seek(int64(i2)+8, 0)
+		_, _ = self.f.Seek(int64(i2)+8, 0)
 		blockSize = 0
-		binary.Read(self.f, binary.LittleEndian, &blockSize)
-		self.f.Seek(2, 1)
-		binary.Read(self.f, binary.LittleEndian, &i2)
+		_ = binary.Read(self.f, binary.LittleEndian, &blockSize)
+		_, _ = self.f.Seek(2, 1)
+		_ = binary.Read(self.f, binary.LittleEndian, &i2)
 		if i2 == oldIndex {
 			panic("Generic exception")
 		}
@@ -427,11 +427,11 @@ func (self *DBXReader) GetMessage(msgNumber int) string {
 	it := 0
 	pl := []byte{}
 	for i2 != 0 {
-		self.f.Seek(int64(i2)+8, 0)
+		_, _ = self.f.Seek(int64(i2)+8, 0)
 		blockSize = 0
-		binary.Read(self.f, binary.LittleEndian, &blockSize)
-		self.f.Seek(2, 1)
-		binary.Read(self.f, binary.LittleEndian, &i2)
+		_ = binary.Read(self.f, binary.LittleEndian, &blockSize)
+		_, _ = self.f.Seek(2, 1)
+		_ = binary.Read(self.f, binary.LittleEndian, &i2)
 		bbuf = make([]byte, blockSize)
 		self.f.Read(bbuf)
 		pl = append(pl, bbuf...)

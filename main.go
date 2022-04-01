@@ -475,17 +475,17 @@ func main() {
 					sender = "-"
 				}
 				s = "From " + sender + " " + ts
-				outFile.WriteString(s)
-				outFile.WriteString("\r\n")
+				_, _ = outFile.WriteString(s)
+				_, _ = outFile.WriteString("\r\n")
 
 				s = dbx.GetMessage(j)
 
 				s = ReplaceFrom(s)
-				outFile.WriteString(s)
-				outFile.WriteString("\r\n")
+				_, _ = outFile.WriteString(s)
+				_, _ = outFile.WriteString("\r\n")
 
 				if argDn || (len(s) > 0 && s[len(s)-1] != '\n') {
-					outFile.WriteString("\r\n")
+					_, _ = outFile.WriteString("\r\n")
 				}
 			}
 
