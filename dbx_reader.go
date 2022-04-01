@@ -122,8 +122,7 @@ func (self *DBXReader) readIndex(pos int) {
 
 func (self *DBXReader) readInfos() {
 	for i := 0; i < self.GetItemCount(); i++ {
-		var index uint32
-		index = uint32(self.GetIndex(i))
+		index := uint32(self.GetIndex(i))
 		_, _ = self.f.Seek(int64(index)+4, 0)
 		var size uint32
 		_ = binary.Read(self.f, binary.LittleEndian, &size)

@@ -185,10 +185,10 @@ func TestDBXReader_GetSenderAddress(t *testing.T) {
 	if err != nil {
 		t.Fatal("Unable to open test file!")
 	}
-	if strings.Index(dbx.GetSenderAddress(0), "@mail") < 0 {
+	if !strings.Contains(dbx.GetSenderAddress(0), "@mail") {
 		t.Fatal("Wrong sender address(0)!")
 	}
-	if strings.Index(dbx.GetSenderAddress(1), "@mail") < 0 {
+	if !strings.Contains(dbx.GetSenderAddress(1), "@mail") {
 		t.Fatal("Wrong sender address(1)!")
 	}
 	dbx.Close()
