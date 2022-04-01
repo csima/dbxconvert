@@ -26,17 +26,20 @@ func TestDBXReader_Close(t *testing.T) {
 	}
 }
 
-func TestDBXReader_GetFileDate(t *testing.T) {
-	dbx := &DBXReader{}
-	err := dbx.Open("./fixtures/test.dbx")
-	if err != nil {
-		t.Fatal("Unable to open test file!")
-	}
-	if dbx.GetFileDate().Format("2006-01-02 15:04:05") != "2016-09-12 02:04:02" {
-		t.Fatal("DBX File date is wrong!")
-	}
-	dbx.Close()
-}
+// This test doesn't work once you check the code out as git doesn't presrve times
+//func TestDBXReader_GetFileDate(t *testing.T) {
+//	dbx := &DBXReader{}
+//	err := dbx.Open("./fixtures/test.dbx")
+//	if err != nil {
+//		t.Fatal("Unable to open test file!")
+//	}
+//	got := dbx.GetFileDate().Format("2006-01-02 15:04:05")
+//	expected := "2016-09-12 02:04:02"
+//	if got != expected {
+//		t.Fatalf("DBX File date is wrong!, got %#v, expected %#v", got, expected)
+//	}
+//	dbx.Close()
+//}
 
 func TestDBXReader_GetType(t *testing.T) {
 	dbx := &DBXReader{}

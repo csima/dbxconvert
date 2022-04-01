@@ -23,6 +23,7 @@ var testFormats = [][]string{
 	},
 }
 
+// Time date issues.
 func TestFormatFilename(t *testing.T) {
 	dbx := &DBXReader{}
 	err := dbx.Open("./fixtures/test.dbx")
@@ -31,8 +32,9 @@ func TestFormatFilename(t *testing.T) {
 	}
 
 	for _, format := range testFormats {
-		if FormatFilename(dbx, 0, format[0]) != format[1] {
-			t.Error("Formatting error:", format[0], "converted to", format[1])
+		actual := FormatFilename(dbx, 0, format[0])
+		if actual != format[1] {
+			t.Error("Formatting error:", format[0], "didn't convert to", format[1], "but converted to", actual)
 		}
 	}
 
