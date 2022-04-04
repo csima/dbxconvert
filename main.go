@@ -34,13 +34,10 @@ func FormatFilename(dbx *DBXReader, msgNr int, format string) (outString string)
 	outString = format
 	rx := regexp.MustCompile(`\$(.*?)\$`)
 	submatches := rx.FindAllStringSubmatch(format, -1)
-	tokens := []string{}
+	var tokens []string
 	for _, submatch := range submatches {
 		varName = submatch[1]
-		tokens = []string{}
-		for _, part := range strings.Split(varName, "_") {
-			tokens = append(tokens, part)
-		}
+		tokens = strings.Split(varName, "_")
 
 		var s string
 		//		var parsePos int
@@ -214,10 +211,10 @@ var (
 	argRcvDate   bool   = false
 	argOverwrite bool   = false
 	argHelp      bool   = false
-	argSendDate  bool   = false
-	argMerge     bool   = false
-	fileSpec     string = ""
-	outDir       string = ""
+	//argSendDate  bool   = false
+	argMerge bool   = false
+	fileSpec string = ""
+	outDir   string = ""
 
 	mbxFilenameFormat string = "$DBXNAME$.mbx"
 	emlFilenameFormat string = "$SNAME_L:32_E:Unknown$ - $SUBJ_L:64_E:No Subject$.eml"
@@ -283,7 +280,7 @@ func parseArguments() {
 			}
 
 			if strings.ToLower(s) == "-senddate" {
-				argSendDate = true
+				//argSendDate = true
 				continue
 			}
 
@@ -475,17 +472,17 @@ func main() {
 					sender = "-"
 				}
 				s = "From " + sender + " " + ts
-				outFile.WriteString(s)
-				outFile.WriteString("\r\n")
+				_, _ = outFile.WriteString(s)
+				_, _ = outFile.WriteString("\r\n")
 
 				s = dbx.GetMessage(j)
 
 				s = ReplaceFrom(s)
-				outFile.WriteString(s)
-				outFile.WriteString("\r\n")
+				_, _ = outFile.WriteString(s)
+				_, _ = outFile.WriteString("\r\n")
 
 				if argDn || (len(s) > 0 && s[len(s)-1] != '\n') {
-					outFile.WriteString("\r\n")
+					_, _ = outFile.WriteString("\r\n")
 				}
 			}
 
@@ -564,13 +561,13 @@ func main() {
 				}
 
 				s := dbx.GetMessage(j)
-				outFileEml.WriteString(s)
+				_, _ = outFileEml.WriteString(s)
 				outFileEml.Close()
 
 				if argRcvDate {
-					os.Chtimes(outFilePath, dbx.GetReceiveDate(j), dbx.GetReceiveDate(j))
+					_ = os.Chtimes(outFilePath, dbx.GetReceiveDate(j), dbx.GetReceiveDate(j))
 				} else {
-					os.Chtimes(outFilePath, dbx.GetSendDate(j), dbx.GetSendDate(j))
+					_ = os.Chtimes(outFilePath, dbx.GetSendDate(j), dbx.GetSendDate(j))
 				}
 				processedMails++
 			}

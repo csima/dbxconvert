@@ -1,0 +1,5 @@
+/.idea
+*.iml
+/dbxconvert
+/dist
+/dbxconvert.exe
