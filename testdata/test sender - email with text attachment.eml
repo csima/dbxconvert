@@ -1,0 +1,24 @@
+MIME-Version: 1.0
+From: Test Sender <sender@example.com>
+To: Test Receiver <receiver@example.com>
+Subject: Email with text attachment
+Date: Mon, 15 Jan 2024 10:30:00 +0000
+Content-Type: multipart/mixed; boundary="----=_Part_0_1234567890"
+
+------=_Part_0_1234567890
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+This is the main body of the email.
+It contains a text file attachment.
+
+------=_Part_0_1234567890
+Content-Type: text/plain; name="document.txt"
+Content-Disposition: attachment; filename="document.txt"
+Content-Transfer-Encoding: 7bit
+
+This is the content of the attached text file.
+It has multiple lines.
+Line 3 of the attachment.
+
+------=_Part_0_1234567890--

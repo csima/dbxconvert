@@ -1,0 +1,93 @@
+From sender@example.com Mon Jan 15 10:30:00 2024
+MIME-Version: 1.0
+From: Test Sender <sender@example.com>
+To: Test Receiver <receiver@example.com>
+Subject: Email with text attachment
+Date: Mon, 15 Jan 2024 10:30:00 +0000
+Content-Type: multipart/mixed; boundary="----=_Part_0_1234567890"
+
+------=_Part_0_1234567890
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+This is the main body of the email.
+It contains a text file attachment.
+
+------=_Part_0_1234567890
+Content-Type: text/plain; name="document.txt"
+Content-Disposition: attachment; filename="document.txt"
+Content-Transfer-Encoding: 7bit
+
+This is the content of the attached text file.
+It has multiple lines.
+Line 3 of the attachment.
+
+------=_Part_0_1234567890--
+
+From another@example.com Tue Feb 20 14:45:00 2024
+MIME-Version: 1.0
+From: Another Sender <another@example.com>
+To: Test Receiver <receiver@example.com>
+Subject: Email with binary attachment
+Date: Tue, 20 Feb 2024 14:45:00 +0000
+Content-Type: multipart/mixed; boundary="----=_Part_1_9876543210"
+
+------=_Part_1_9876543210
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+This email contains a binary attachment (image).
+
+------=_Part_1_9876543210
+Content-Type: image/png; name="test_image.png"
+Content-Disposition: attachment; filename="test_image.png"
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC
+
+------=_Part_1_9876543210--
+
+From multi@example.com Sun Mar 10 09:00:00 2024
+MIME-Version: 1.0
+From: Multi Attach <multi@example.com>
+To: Test Receiver <receiver@example.com>
+Subject: Email with multiple attachments
+Date: Sun, 10 Mar 2024 09:00:00 +0000
+Content-Type: multipart/mixed; boundary="----=_Part_2_1111111111"
+
+------=_Part_2_1111111111
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+This email has multiple attachments:
+1. A text file
+2. A CSV file
+3. A JSON file
+
+------=_Part_2_1111111111
+Content-Type: text/plain; name="readme.txt"
+Content-Disposition: attachment; filename="readme.txt"
+Content-Transfer-Encoding: 7bit
+
+This is a plain text attachment.
+With multiple lines.
+
+------=_Part_2_1111111111
+Content-Type: text/csv; name="data.csv"
+Content-Disposition: attachment; filename="data.csv"
+Content-Transfer-Encoding: 7bit
+
+Name,Email,Score
+Alice,alice@example.com,95
+Bob,bob@example.com,87
+Charlie,charlie@example.com,92
+
+------=_Part_2_1111111111
+Content-Type: application/json; name="config.json"
+Content-Disposition: attachment; filename="config.json"
+Content-Transfer-Encoding: 7bit
+
+{"name": "Test", "values": [1, 2, 3], "active": true}
+
+------=_Part_2_1111111111--
+

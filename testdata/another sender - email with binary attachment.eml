@@ -1,0 +1,21 @@
+MIME-Version: 1.0
+From: Another Sender <another@example.com>
+To: Test Receiver <receiver@example.com>
+Subject: Email with binary attachment
+Date: Tue, 20 Feb 2024 14:45:00 +0000
+Content-Type: multipart/mixed; boundary="----=_Part_1_9876543210"
+
+------=_Part_1_9876543210
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+This email contains a binary attachment (image).
+
+------=_Part_1_9876543210
+Content-Type: image/png; name="test_image.png"
+Content-Disposition: attachment; filename="test_image.png"
+Content-Transfer-Encoding: base64
+
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12P4//8/AAX+Av7czFnnAAAAAElFTkSuQmCC
+
+------=_Part_1_9876543210--

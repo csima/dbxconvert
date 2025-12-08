@@ -1,0 +1,42 @@
+MIME-Version: 1.0
+From: Multi Attach <multi@example.com>
+To: Test Receiver <receiver@example.com>
+Subject: Email with multiple attachments
+Date: Sun, 10 Mar 2024 09:00:00 +0000
+Content-Type: multipart/mixed; boundary="----=_Part_2_1111111111"
+
+------=_Part_2_1111111111
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+This email has multiple attachments:
+1. A text file
+2. A CSV file
+3. A JSON file
+
+------=_Part_2_1111111111
+Content-Type: text/plain; name="readme.txt"
+Content-Disposition: attachment; filename="readme.txt"
+Content-Transfer-Encoding: 7bit
+
+This is a plain text attachment.
+With multiple lines.
+
+------=_Part_2_1111111111
+Content-Type: text/csv; name="data.csv"
+Content-Disposition: attachment; filename="data.csv"
+Content-Transfer-Encoding: 7bit
+
+Name,Email,Score
+Alice,alice@example.com,95
+Bob,bob@example.com,87
+Charlie,charlie@example.com,92
+
+------=_Part_2_1111111111
+Content-Type: application/json; name="config.json"
+Content-Disposition: attachment; filename="config.json"
+Content-Transfer-Encoding: 7bit
+
+{"name": "Test", "values": [1, 2, 3], "active": true}
+
+------=_Part_2_1111111111--
