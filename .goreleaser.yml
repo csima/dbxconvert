@@ -1,4 +1,4 @@
-project_name: golang-rcs
+project_name: dbxconvert
 builds:
   -
     id: dbxconvert
